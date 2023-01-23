@@ -1,7 +1,8 @@
 import express from "express";
-import mysql from "mysql";
+import mysql2 from "mysql2";
 import dotenv from "dotenv";
 import cors from "cors";
+
 
 // Config
 dotenv.config({path:"./config/config.env"});
@@ -13,7 +14,7 @@ app.use(express.json());
 // This middleware allows other website to fetch data, make requests
 app.use(cors());
 
-const db = mysql.createConnection({
+const db = mysql2.createConnection({
     host: "containers-us-west-152.railway.app",
     port: 6881,
     user: "root",
