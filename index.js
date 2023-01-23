@@ -82,6 +82,6 @@ app.put("/books/:id", (req, res) => {
     })
 })
 
-app.listen(process.env.BACKEND_SERVER_PORT, () => {
+app.listen(process.env.PORT, () => {
     console.log("Connected to backend!")
 })
