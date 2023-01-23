@@ -3,7 +3,6 @@ import mysql2 from "mysql2";
 import dotenv from "dotenv";
 import cors from "cors";
 
-
 // Config
 dotenv.config({path:"./config/config.env"});
 
@@ -40,6 +39,18 @@ app.get("/books", (req, res) => {
             return res.json(err);
         }
         return res.json(data);
+    })
+})
+
+app.get("/books/:id", (req, res) => {
+    const bookId = req.params.id;
+    const q = "select * from books where id = ?";
+
+    db.query(q, [bookId], (err, data) => {
+        if (err){
+            console.log(err);
+        }
+        res.json(data);
     })
 })
 
@@ -91,6 +102,10 @@ app.put("/books/:id", (req, res) => {
     })
 })
 
-app.listen(process.env.PORT, () => {
-    console.log("Connected to backend!")
+// To check default server (on which it is currently running) we are using server.address()
+// app.listen() defines the port that acts as an interface bw actual server and frontend
+// process.env.PORT has some default value when hosting on sites like railway.app or heroku
+var server = app.listen(process.env.PORT, () => {
+    console.log(server.address());
+    console.log("Connected to backend!");
 })
