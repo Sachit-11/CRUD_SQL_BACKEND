@@ -14,10 +14,18 @@ app.use(express.json());
 app.use(cors());
 
 const db = mysql.createConnection({
-    host: "localhost",
+    host: "containers-us-west-152.railway.app",
+    port: 6881,
     user: "root",
     password: `${process.env.PASSWORD}`,
-    database: "test"
+    database: "railway"
+})
+
+db.connect((err) => {
+    if (err){
+        console.log(err);
+    }
+    console.log("db connected");
 })
 
 app.get("/", (req, res) => {
