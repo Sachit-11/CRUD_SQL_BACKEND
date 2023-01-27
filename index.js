@@ -26,6 +26,16 @@ db.connect((err) => {
         console.log(err);
     }
     console.log("db connected");
+
+    // creating the table
+    const q = "create table if not exists books(`id` int not null auto_increment, `title` VARCHAR(45) NOT NULL, `desc` VARCHAR(45) NULL, `price` INT NOT NULL, `cover` text NULL, primary key(`id`))";
+
+    db.query(q, (err, data) => {
+        if (err){
+            return console.log(err);
+        }
+        console.log("Table Books created successfully");
+    })
 })
 
 app.get("/", (req, res) => {
@@ -48,9 +58,9 @@ app.get("/books/:id", (req, res) => {
 
     db.query(q, [bookId], (err, data) => {
         if (err){
-            console.log(err);
+            return res.json(err);
         }
-        res.json(data);
+        return res.json(data);
     })
 })
 
@@ -65,6 +75,7 @@ app.post("/books", (req, res) => {
 
     db.query(q, [values], (err, data) => {
         if (err){
+            console.log(err);
             return res.json(err);
         }
         return res.json("Book has been created successfully");
